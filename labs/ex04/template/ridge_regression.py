@@ -5,7 +5,7 @@ Ridge Regression
 """
 
 import numpy as np
-
+from costs import compute_mse
 
 def ridge_regression(y, tx, lambda_):
     """implement ridge regression.
@@ -27,4 +27,15 @@ def ridge_regression(y, tx, lambda_):
     # COPY YOUR CODE FROM EX03 HERE
     # ridge regression: TODO
     # ***************************************************
-    raise NotImplementedError
+    
+    # shape of the data matrix X
+    n, d = tx.shape
+
+    lambda_prime = 2 * n * lambda_
+
+    # solve for the weights using np.linalg.solve for numerical stability
+    a = tx.T @ tx + lambda_prime * np.identity(d)
+    b = tx.T @ y
+    
+    return np.linalg.solve(a, b)
+
